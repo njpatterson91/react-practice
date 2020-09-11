@@ -1,35 +1,36 @@
 import React, { useState, useEffect } from "react";
-import logo from "./globe.svg";
 import "./App.css";
-import axios from "axios";
-import CountryCard from "./components/countrycard";
+import Country from "./components/countries";
+import Top from "./components/titlebar";
 import styled from "styled-components";
-const SiteDiv = styled.div`
+import axios from "axios";
+
+const MainFlex = styled.div`
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
-  max-width: 30%;
-  margin: 0 auto;
+  justify-content: space-between;
+  max-width: 100%;
 `;
+
 function App() {
+  const [region, setRegion] = useState("europe");
   const [countryData, setCountryData] = useState([]);
   useEffect(() => {
     axios
-      .get(`https://restcountries.eu/rest/v2/region/americas`)
+      .get(`https://restcountries.eu/rest/v2/region/${region}`)
       .then((res) => {
         setCountryData(res.data);
       });
     console.log(countryData);
-  }, []);
-  return countryData.map((item) => {
-    return (
-      <SiteDiv>
-        <div>
-          <CountryCard data={item} />
-        </div>
-      </SiteDiv>
-    );
-  });
+  }, [region]);
+  return (
+    <div>
+      <Top setRegion={setRegion} />
+      <MainFlex>
+        <Country countryData={countryData} />
+      </MainFlex>
+    </div>
+  );
 }
 
 export default App;

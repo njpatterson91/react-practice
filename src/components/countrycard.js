@@ -19,12 +19,13 @@ const CountryDiv = styled.div`
   }
 `;
 
-export default function Country(data) {
+export default function Country(props) {
+  const { data } = props;
   return (
     <CountryDiv>
       <div>
-        <h1>{data.data.name}</h1>
-        <img src={data.data.flag}></img>
+        <h1>{data.name}</h1>
+        <img src={data.flag}></img>
       </div>
     </CountryDiv>
   );
